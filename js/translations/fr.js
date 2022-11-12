@@ -20,7 +20,7 @@ window.translations.fr = {
   npcs: {
     title: "PNJs",
     add: "Ajouter",
-    npc: "PNG",
+    npc: "PNJ",
     metatype: "Métatype",
     traits: "Traits",
     motivation: "Motivation",
