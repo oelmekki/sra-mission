@@ -1,4 +1,4 @@
-# Shadowrun Anarchy Generator
+# Shadowrun Anarchy Mission Generator
 
 > [Shadowrun](https://www.shadowrunsixthworld.com/) is a tabletop RPG owned
 > by Catalyst Game Labs. [Shadowrun Anarchy](https://store.catalystgamelabs.com/products/shadowrun-anarchy-pdf) is
