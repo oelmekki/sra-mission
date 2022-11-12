@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/sra-mission-generator/index.html",
+  "start_url": "https://oelmekki.github.io/sra-mission/",
   "display": "standalone",
   "theme_color": "#b5318f",
   "background_color": "#0b0e11"

@@ -31,7 +31,9 @@ computation.
 
 ## Where
 
-The app can be run through github pages here.
+The app can be run through [github pages here](https://oelmekki.github.io/sra-mission/).
+
+Or the french version : [github pages here](https://oelmekki.github.io/sra-mission/?lang=fr). 
 
 
 ## What about my language?
