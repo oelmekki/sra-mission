@@ -1,0 +1,539 @@
+/*
+ * This is my usual css toolbox. Don't bother.
+ */
+
+/*
+ * Reset.css
+ */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+ * Variables
+ */
+
+body {
+  /*
+   * responsive breakpoints.
+   *
+   * Please note the layout should be tested not only at those width,
+   * but also for intermediary sizes as the app may be included as
+   * a plugin in a block of an other app, and the width will thus
+   * be uncommon.
+   *
+   * Those declarations are for reference only, currently, since we
+   * can't use css variables in media query definitions. Ultimately,
+   * it will be usable with env() when browser will have implemented
+   * them.
+   */
+  --tablet-min: 500px;
+  --laptop-min: 1024px;
+  --desktop-min: 1200px;
+
+  /*
+   * Use a fraction of those for deeper blocks.
+   *
+   * first level block: no divisor
+   * second level block: --root-spacing-* / 2
+   * third level block: --root-spacing-* / 3
+   * etc
+   */
+  --root-spacing-width: 3vw;
+  --root-spacing-height: 8vh;
+
+  /*
+   * Use divisors/mulipliers of those to set text size
+   */
+  --base-font: 1em;
+  --base-line-height: 1.5em;
+
+  /*
+   * a few colors helpers.
+   */
+  --primary-color: #f0b90b;
+  --secondary-color: #00c582;
+
+  --dark: #0b0e11;
+  --lesser-dark: #333;
+  --grey: #151515;
+  --lesser-light: #666;
+  --mid-light: #888;
+  --light: #aaa;
+
+  --red: #ab0d0d;
+  --green: green;
+  --warning-color: #600;
+  --warning-bg-color: #faa;
+}
+
+@media(max-width: 499px)) {
+  .hidden-phone { display: none; }
+  .hidden-mobile { display: none; }
+
+  .visible-phone { display: inherit; }
+  .visible-tablet { display: none; }
+  .visible-mobile { display: inherit; }
+  .visible-laptop { display: none; }
+  .visible-desktop { display: none; }
+  .visible-computer { display: none; }
+}
+
+@media(min-width: 500px && max-width: 1023px) {
+  .hidden-phone { display: inherit; }
+
+  .hidden-tablet { display: none; }
+  .hidden-mobile { display: none; }
+
+  .visible-phone { display: none; }
+  .visible-tablet { display: inherit; }
+  .visible-mobile { display: inherit; }
+  .visible-laptop { display: none; }
+  .visible-desktop { display: none; }
+  .visible-computer { display: none; }
+}
+
+@media(min-width: 1024px && max-width: 1199px) {
+  .hidden-phone { display: inherit; }
+  .hidden-tablet { display: inherit; }
+  .hidden-mobile { display: inherit; }
+
+  .hidden-laptop { display: none; }
+  .hidden-computer { display: none; }
+
+  .visible-phone { display: none; }
+  .visible-tablet { display: none; }
+  .visible-mobile { display: none; }
+  .visible-laptop { display: inherit; }
+  .visible-desktop { display: none; }
+  .visible-computer { display: inherit; }
+}
+
+@media(min-width: 1200px) {
+  .hidden-phone { display: inherit; }
+  .hidden-tablet { display: inherit; }
+  .hidden-mobile { display: inherit; }
+  .hidden-laptop { display: inherit; }
+
+  .hidden-desktop { display: none; }
+  .hidden-computer { display: none; }
+
+  .visible-phone { display: none; }
+  .visible-tablet { display: none; }
+  .visible-mobile { display: none; }
+  .visible-laptop { display: none; }
+  .visible-desktop { display: inherit; }
+  .visible-computer { display: inherit; }
+}
+
+/*
+ * Shared
+ */
+
+/*
+ * Add this to your root component, displaying a whole page.
+ *
+ * It will generate a grid you can use for proper layout of your page.
+ * Desktop view has 6 columns, tablets has 3, mobile has 1.
+ *
+ * Despite the fact a page should be unique, we use a class name so
+ * that you can give a unique id to your root element for easy css
+ * selection.
+ */
+.page {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: var(--root-spacing-height) var(--root-spacing-width);
+  grid-row-gap: var(--root-spacing-height);
+  grid-column-gap: var(--root-spacing-width);
+  min-height: 90vh;
+}
+
+/*
+ * A group is a block grouping features in your page.
+ *
+ * It allows to separate main content and secondary content.
+ */
+.group {
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: calc(var(--root-spacing-height) / 2) calc(var(--root-spacing-width) / 2);
+  margin-bottom: var(--root-spacing-height);
+  background-color: var(--dark);
+}
+
+.stack-top {
+  justify-content: flex-start;
+}
+
+/*
+ * A feature is a functional block. Eg if you have a list feature, you may also
+ * have a filter feature and a new entry form feature.
+ */
+.feature {
+  display: flex;
+  border: 0 none;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: calc(var(--root-spacing-height) / 3)
+    cal(var(--root-spacing-width) / 3);
+  margin-bottom: calc(var(--root-spacing-height) / 2);
+}
+
+#app,
+textarea,
+input,
+select {
+  font-family: Open Sans, sans-serif;
+  font-size: var(--base-font);
+  line-height: var(--base-line-height);
+  color: var(--light);
+  background-color: var(--dark);
+}
+
+body,
+* {
+  box-sizing: border-box !important;
+}
+
+h1 {
+  font-size: calc(var(--base-font) * 1.2);
+  text-align: center;
+  margin: 2vh 0 5vh;
+}
+
+h3 {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  margin: 2vh 0;
+}
+
+h4 {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  margin: 2vh 0;
+}
+
+p {
+  margin-bottom: 2vh;
+}
+
+em {
+  font-style: italic;
+}
+
+b {
+  font-weight: bold;
+}
+
+button.link, button.link:hover {
+  background-color: transparent; border: 0 none; cursor: pointer; padding: 0;
+}
+
+a, button.link {
+  color: var(--light);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover, button.link:hover {
+  color: var(--mid-light);
+}
+
+img { max-width: 100%; }
+
+a:focus, button.link:focus { border: 1px solid var(--light); }
+button:focus, a.button:focus { opacity: 0.7; }
+
+
+.input-group {
+  margin-bottom: 3vh;
+}
+
+textarea,
+input.text-field,
+select.text-field,
+.checkbox-group {
+  width: 100%;
+  border: 1px solid var(--lesser-dark);
+  border-radius: 2px;
+  font-size: var(--base-font);
+  line-height: var(--base-line-height);
+  margin: 1vh 0;
+  padding: 1vh 1vw;
+}
+
+textarea {
+  transition: min-height 1s;
+  min-height: 0;
+  padding: 1vh 1vw;
+}
+
+textarea.autogrow:focus {
+  min-height: 50vh;
+}
+
+.checkbox-group label {
+  display: inline-block;
+  margin-right: 2vw;
+}
+
+select {
+  appearance: none; -webkit-appearance: none;
+  border: 1px solid var(--secondary-color);
+  padding: 1vh 1vw;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8em;
+  background-color: var(--secondary-color);
+  color: var(--dark);
+}
+
+button, .button {
+  border: 1px solid var(--primary-color);
+  background-color: transparent;
+  padding: 1vh 1vw;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+/*
+ * Primary CTAs are actions that pops out, like a "create" or "send" button.
+ */
+button, .button {
+  background-color: var(--primary-color);
+  color: var(--dark);
+  border-color: var(--primary-color);
+}
+
+button:hover, .button:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark);
+  border-color: var(--secondary-color);
+}
+
+/*
+ * Secondary CTAs are typically cancel actions, next to a primary button. You can
+ * also use it for actions that you don't want to especially stand out (eg: options).
+ */
+button.secondary, .button.secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--dark);
+}
+
+button.secondary:hover, .button.secondary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--dark);
+}
+
+button.danger {
+  background-color: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+button.danger:hover, .button.danger:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--dark);
+}
+
+button[disabled] {
+  background-color: var(--lesser-dark !important);
+  color: var(--lesser-light !important);
+}
+
+/*
+ * if button contains only an icon, add this class
+ */
+button.icon, .button.icon {
+  padding: 1vh 0.3vw;
+  border-width: 1px;
+  border-radius: 1000px;
+  background-color: var(--primary-color);
+  color: var(--dark);
+  border-color: var(--primary-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.icon svg, .button.icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+button.icon svg .fill-color, .button.icon svg .fill-color {
+  fill: var(--dark);
+}
+
+button.icon svg .stroke-color, .button.icon svg .stroke-color {
+  stroke: var(--dark);
+}
+
+button.icon:hover, .button.icon:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark);
+  border-color: var(--secondary-color);
+}
+
+button.icon:hover svg .fill-color, .button.icon:hover svg .fill-color {
+  fill: var(--dark);
+}
+
+button.icon:hover svg .stroke-color, .button.icon:hover svg .stroke-color {
+  stroke: var(--dark);
+}
+
+/*
+ * Danger CTAs are typically delete actions.
+ */
+button.icon.danger:hover, .button.icon.danger:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+}
+
+.text-help {
+  font-size: 0.8em;
+  color: var(--lesser-light);
+}
+
+p.warning {
+  color: var(--warning-color);
+  background-color: var(--warning-bg-color);
+  border: 1px solid var(--warning-color);
+  padding: 2vh 1vw;
+}
+
+button.link {
+  text-decoration: underline; font-size: 1em;
+}
+
+body { background-color: var(--dark); }

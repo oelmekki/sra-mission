@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="manifest" href="./manifest.json"/>
+  <title>Shadowrun Anarchy Mission Generator</title>
+  <link href="./css/index.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="./img/favicon.png" />
+  <script type="module" src="./js/translations/en.js"></script>
+  <script type="module" src="./js/translations/fr.js"></script>
+  <script type="module" src="./js/index.js"></script>
+  <script>
+  </script>
+</head>
+<body>
+
+<div id="root">
+  <div id="app" class="page">
+    <nav id="langs">
+      <a href="?lang=en">English</a>
+      <a href="?lang=fr">Français</a>
+    </nav>
+
+    <header>
+      <h1 data-tr="mainTitle"></h1>
+      <p data-tr="controlledAnarchy"></p>
+    </header>
+
+    <section id="mission">
+      <h2 data-tr="mission.title"></h2>
+
+      <form>
+        <label><span data-tr="mission.playersCount"></span> <input type="number" class="players text-field" min="1" max="10" value="4"></label>
+        <label><span data-tr="mission.scenesCount"></span> <input type="number" class="scenes text-field" min="1" max="10" value="3"></label>
+        <label><span data-tr="mission.interestedPartiesCount"></span> <input type="number" class="interested-parties text-field" min="2" max="10" value="2"></label>
+        <button><span data-tr="mission.generateMission"></span></button>
+      </form>
+
+      <div class="generated">
+        <h3 data-tr="mission.runTags"></h3>
+        <p class="tags"></p>
+
+        <h3 data-tr="mission.runThreats"></h3>
+        <p class=threats></p>
+
+        <h3 data-tr="mission.runComplications"></h3>
+        <p><button class="complication" data-tr="mission.revealComplication"></button></p>
+        <p class="complication"></p>
+
+        <h3 data-tr="mission.scenes"></h3>
+        <ul class="scenes">
+        </ul>
+
+        <template id="scene-template">
+          <li class="scene">
+            <h4><span data-tr="mission.scene"></span> <span class="number"></span></h4>
+            <img src="" />
+            <p><span data-tr="mission.modifier"></span>: <span class="modifier"></span>.</p>
+          </li>
+        </template>
+      </div>
+    </section>
+
+    <section id="npcs">
+      <h2 data-tr="npcs.title"></h2>
+      <ul></ul>
+      <button data-tr="npcs.add"></button>
+
+      <template id="npc-template">
+        <li class="npc">
+          <h3><span data-tr="npcs.npc"></span> <span class="index"></span></h3>
+          <p><span class="label" data-tr="npcs.metatype"></span>: <span class="metatype"></span></p>
+          <p><span class="label" data-tr="npcs.traits"></span>: <span class="traits"></span></p>
+          <p><span class="label" data-tr="npcs.motivation"></span>: <span class="motivation"></span></p>
+        </li>
+      </template>
+    </section>
+  </div>
+</div>
+</body>
+</html>

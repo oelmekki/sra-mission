@@ -1,0 +1,25 @@
+{
+  "short_name": "SRA Mission",
+  "name": "Shadowrun Anarchy Mission Generator",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "img/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "img/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/sra-mission-generator/index.html",
+  "display": "standalone",
+  "theme_color": "#b5318f",
+  "background_color": "#0b0e11"
+}

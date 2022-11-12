@@ -1,0 +1,32 @@
+@import "./kikpack.css";
+
+body { --primary-color: #b5318f; }
+header { margin-bottom: 5vh; }
+h1 { font-size: 2em; line-height: 1.2em; color: var(--secondary-color); text-align: left; margin-bottom: 2vh; }
+h2 { font-size: 1.5em; line-height: 1.2em; color: var(--secondary-color); text-align: left; margin-bottom: 1vh; margin-top: 4vh; }
+a { color: var(--primary-color); }
+button { font-size: 1.2em; }
+
+#langs { position: absolute; top: 1vh; right: 1vw; }
+#langs a { font-size: 1em; margin-left: 1vw; }
+
+#mission form { display: flex; flex-direction: column; }
+#mission form button { margin: 2vh 0 5vh; }
+#mission .generated { display: none; }
+#mission .badge strong { font-weight: bold; color: var(--primary-color); }
+#mission p.badge.complication { font-weight: bold; background-color: #e5318f; color: #000; }
+#mission .badge {
+  display: inline-block; padding: 1vh 1vw; margin-right: 10px; margin-bottom: 2vh;
+  background-color: #333; border-radius: 100px; padding: 1vh 3vw;
+}
+
+
+#npcs .label { font-weight: bold; }
+
+@media(min-width: 1024px) {
+  button { font-size: 1em; }
+  #mission form { display: flex; flex-direction: row; }
+  #mission form button { margin: 0; }
+  #mission .badge { padding: 1vh 1vw; }
+  #mission .scenes img { max-width: 500px; }
+}
