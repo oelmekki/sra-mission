@@ -6,6 +6,8 @@ h1 { font-size: 2em; line-height: 1.2em; color: var(--secondary-color); text-ali
 h2 { font-size: 1.5em; line-height: 1.2em; color: var(--secondary-color); text-align: left; margin-bottom: 1vh; margin-top: 4vh; }
 a { color: var(--primary-color); }
 button { font-size: 1.2em; }
+button[disabled] { filter: saturate(0); cursor: inherit; }
+button[disabled]:hover { background-color: var(--primary-color); border-color: var(--primary-color); }
 
 #langs { position: absolute; top: 1vh; right: 1vw; }
 #langs a { font-size: 1em; margin-left: 1vw; }

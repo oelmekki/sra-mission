@@ -1,6 +1,7 @@
 window.translations.fr = {
   mainTitle: "Générateur de Missions pour Shadowrun Anarchy",
   controlledAnarchy: 'Utilise le système <a href="https://www.surprisethreat.com/single-post/controlled-anarchy">Controlled Anarchy</a> .',
+  export: "Exporter le contenu généré",
 
   mission: {
     title: "Mission",
@@ -15,6 +16,7 @@ window.translations.fr = {
     scenes: "Scènes",
     scene: "Scène",
     modifier: "Modificateur",
+    map: "Carte",
   },
 
   npcs: {

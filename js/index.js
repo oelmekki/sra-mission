@@ -1,14 +1,14 @@
-let pick = array => {
-  return array[Math.floor(Math.random() * array.length)];
-};
+let currentLanguage = (new URLSearchParams(window.location.search)).get("lang") || "en";
 
-let hideComplication = () => {
+function pick(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function hideComplication() {
   let $complication = document.querySelector("p.complication");
   $complication.classList.remove("badge");
   $complication.textContent = "";
-};
-
-let currentLanguage = (new URLSearchParams(window.location.search)).get("lang") || "en";
+}
 
 function translate(key) {
   let path = key.split(".");
@@ -21,6 +21,8 @@ function translate(key) {
     return "missing translation";
   }
 }
+
+let t = translate;
 
 function translateAll() {
   Array.from(document.querySelectorAll("[data-tr]")).forEach($el => {
@@ -104,6 +106,7 @@ let initializers = [
     let generate = () => {
       let scenesCount = parseInt($scenesCount.value) || 3;
       let partiesCount = parseInt($partiesCount.value) || 2;
+      document.getElementById("export").removeAttribute("disabled");
 
       [$tags, $threats, $scenes].forEach($el => $el.innerHTML = "");
       hideComplication();
@@ -138,7 +141,7 @@ let initializers = [
     });
   },
 
-  function NpcsSection() {
+  function npcsSection() {
     let $container = document.getElementById("npcs");
     let $list = $container.querySelector("ul");
     let $add = $container.querySelector("button");
@@ -148,6 +151,7 @@ let initializers = [
     let generate = () => {
       let $npc = $template.content.cloneNode(true);
       npcCount++;
+      document.getElementById("export").removeAttribute("disabled");
 
       let metatype = pick([...window.contactMetatype, "rare"]);
       if (metatype == "rare") metatype = pick(window.contactRareMetatype);
@@ -166,7 +170,47 @@ let initializers = [
   function translations() {
     translateAll();
   },
+
+  function exportMission() {
+    document.getElementById("export").addEventListener("click", () => {
+      let exported = new Blob([exportContent()]);
+
+      let link = document.createElement("a");
+      link.href = window.URL.createObjectURL(exported, {type: "text/plain"});
+      link.download = "sra-mission.txt";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
 ];
+
+function exportScene($scene) {
+  return `
+${$scene.querySelector("h4").textContent}
+${t("mission.map")} : ${$scene.querySelector("img").src}
+${t("mission.modifier")} : ${$scene.querySelector(".modifier").textContent}
+`;
+}
+
+function exportContent() {
+  return `
+${t("mission.title").toUpperCase()}
+
+${t("mission.runTags")} : ${Array.from(document.querySelectorAll("#mission .tags .badge")).map(el => el.textContent).join(", ")}
+
+${t("mission.runThreats")} : ${Array.from(document.querySelectorAll("#mission .threats .badge")).map(el => el.textContent).join(", ")}
+
+${t("mission.runComplications")} : ${document.querySelector("#mission p.complication").textContent}
+
+${t("mission.scenes").toUpperCase()}
+${Array.from(document.querySelectorAll("#mission li.scene")).map(el => exportScene(el)).join("")}
+
+${t("npcs.title").toUpperCase()}
+${Array.from(document.querySelectorAll("#npcs li.npc")).map(el => el.textContent.split("\n").map(c => c.replace(/^\s+/, '')).join("\n")).join("")}
+
+`;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   initializers.forEach(init => init());

@@ -3,6 +3,7 @@ window.translations = {};
 window.translations.en = {
   mainTitle: "Shadowrun Anarchy Mission Generator",
   controlledAnarchy: 'Using the <a href="https://www.surprisethreat.com/single-post/controlled-anarchy">Controlled Anarchy</a> system.',
+  export: "Export generated content",
 
   mission: {
     title: "Mission",
@@ -17,6 +18,7 @@ window.translations.en = {
     scenes: "Scenes",
     scene: "Scene",
     modifier: "Modifier",
+    map: "Map",
   },
 
   npcs: {
