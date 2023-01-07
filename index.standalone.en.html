@@ -1,0 +1,1227 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="manifest" href="./manifest.json"/>
+  <title>Shadowrun Anarchy Mission Generator</title>
+  <link href="./css/index.css" rel="stylesheet" type="text/css" />
+
+  <!-- TRANSLATIONS TO EDIT ARE HERE -->
+  <script>
+    window.translations = {};
+
+    window.translations.en = {
+      mainTitle: "Shadowrun Anarchy Mission Generator",
+      controlledAnarchy: 'Using the <a href="https://www.surprisethreat.com/single-post/controlled-anarchy">Controlled Anarchy</a> system.',
+      export: "Export generated content",
+
+      mission: {
+        title: "Mission",
+        playersCount: "Players count",
+        scenesCount: "Scenes count",
+        interestedPartiesCount: "Interested parties count",
+        generateMission: "Generate new mission",
+        runTags: "Run tags",
+        runThreats: "Run threats",
+        runComplications: "Run complications",
+        revealComplication: "Reveal a complication",
+        scenes: "Scenes",
+        scene: "Scene",
+        modifier: "Modifier",
+        map: "Map",
+      },
+
+      npcs: {
+        title: "NPCs",
+        add: "Add",
+        npc: "NPC",
+        metatype: "Metatype",
+        traits: "Traits",
+        motivation: "Motivation",
+      },
+
+      runBasicsObjectives: [
+        "<strong>Objective:</strong> Assassination or Destruction",
+        "<strong>Objective:</strong> Investigation or Datasteal",
+        "<strong>Objective:</strong> Enforcement or Persuasion",
+        "<strong>Objective:</strong> Extraction or Insertion",
+        "<strong>Objective:</strong> Protection or Security",
+        "<strong>Objective:</strong> Misdirection or Sabotage",
+      ],
+
+      runBasicsTargets: [
+        "<strong>Target:</strong> Person",
+        "<strong>Target:</strong> Information",
+        "<strong>Target:</strong> Technological",
+        "<strong>Target:</strong> Biological",
+        "<strong>Target:</strong> Magical",
+        "<strong>Target:</strong> Location",
+      ],
+
+      runDetailsInterestedParties: [
+        "<strong>Interested party:</strong> Secret Society",
+        "<strong>Interested party:</strong> Government Agency",
+        "<strong>Interested party:</strong> Political Group",
+        "<strong>Interested party:</strong> A or AA Corporation",
+        "<strong>Interested party:</strong> Law Enforcement",
+        "<strong>Interested party:</strong> Megacorporation (AAA)",
+        "<strong>Interested party:</strong> Criminal Syndicate",
+        "<strong>Interested party:</strong> A or AA Corporation",
+        "<strong>Interested party:</strong> Magical Group",
+        "<strong>Interested party:</strong> Private Individual",
+        "<strong>Interested party:</strong> Exotic Entity",
+      ],
+
+      runDetailsComplications: [
+        "Double-Cross",
+        "Needed: Specific Person",
+        "Misinformation: Location",
+        "Security: Upgrade",
+        "Third Party: Rival",
+        "Security: Increase",
+        "Third Party: Rival",
+        "Security: Alternate",
+        "Misinformation: Target",
+        "Needed: Rare Equipment",
+        "Third Party: Offer",
+      ],
+
+      runLocationMeets: [
+        "<strong>Meet location:</strong> Bar, Club, Restaurant",
+        "<strong>Meet location:</strong> Warehouse, Dock, Factory",
+        "<strong>Meet location:</strong> Urban Waste",
+        "<strong>Meet location:</strong> Moving Vehicle",
+        "<strong>Meet location:</strong> Matrix Host",
+        "<strong>Meet location:</strong> Astral Space",
+      ],
+
+      runLocationTargets: [
+        "<strong>Scene location:</strong> Residential",
+        "<strong>Scene location:</strong> Industrial",
+        "<strong>Scene location:</strong> Urban Waste",
+        "<strong>Scene location:</strong> Financial",
+        "<strong>Scene location:</strong> Commercial",
+        "<strong>Scene location:</strong> Underground or Wilderness",
+      ],
+
+      storyBeatObjects: [
+        "Agenda",
+        "Enemies",
+        "Mental",
+        "Political",
+        "Setting",
+        "Target",
+        "Allies",
+        "Expectations",
+        "Military / Government",
+        "Possession",
+        "Shadow",
+        "Tech",
+        "Balance",
+        "Information",
+        "Objective",
+        "Power",
+        "Social",
+        "Threat",
+        "Challenge",
+        "Leadership",
+        "Patron",
+        "Project",
+        "Spiritual",
+        "Wealth",
+        "Corporation",
+        "Magic",
+        "Physical",
+        "Reputation",
+        "Street",
+        "Weapon",
+        "Critter",
+        "Matrix",
+        "Player",
+        "Security",
+        "Tactic",
+        "Wound",
+      ],
+
+      nodeMapsModifiers: [
+        "No Floating Node",
+        "Missing Node",
+        "Missing Connection",
+        "Extra Connection",
+        "Extra Connected Node",
+        "Extra Floating Node",
+      ],
+
+      contactMetatype: [
+        "M. Human",
+        "F. Human",
+        "M. Elf",
+        "F. Elf",
+        "M. Ork",
+        "F. Ork",
+        "M. Dwarf",
+        "F. Dwarf",
+        "M. Troll",
+        "F. Troll",
+      ],
+
+      contactRareMetatype: [
+        "M. Changeling",
+        "F. Changeling",
+        "M. Fey",
+        "F. Fey",
+        "M. Hobgoblin",
+        "F. Hobgoblin",
+        "M. Gnome",
+        "F. Gnome",
+        "M. Giant",
+        "F. Giant",
+      ],
+
+      contactTraits: [
+        "adventurous",
+        "affectionate",
+        "aggressive",
+        "ambitious",
+        "angry",
+        "anxious",
+        "apologetic",
+        "arrogant",
+        "articulate",
+        "attentive",
+        "bad-mannered",
+        "bold",
+        "bossy",
+        "brilliant",
+        "calm",
+        "careful",
+        "carefree",
+        "careless",
+        "caring",
+        "cautious",
+        "charming",
+        "cheerful",
+        "clumsy",
+        "coarse",
+        "compassionate",
+        "compliant",
+        "conceited",
+        "conscientious",
+        "confident",
+        "considerate",
+        "courageous",
+        "cowardly",
+        "critical",
+        "cruel",
+        "curious",
+        "dangerous",
+        "daring",
+        "decisive",
+        "demanding",
+        "demure",
+        "dependable",
+        "determined",
+        "devious",
+        "disagreeable",
+        "dictatorial",
+        "dishonest",
+        "disrespectful",
+        "domineering",
+        "dull",
+        "dutiful",
+        "easy-going",
+        "efficient",
+        "energetic",
+        "faithful",
+        "fearless",
+        "fearful",
+        "foolish",
+        "friendly",
+        "fussy",
+        "fun-loving",
+        "gentle",
+        "generous",
+        "graceful",
+        "greedy",
+        "hard-working",
+        "happy",
+        "harsh",
+        "hateful",
+        "helpful",
+        "honest",
+        "humanitarian",
+        "humorous",
+        "humble",
+        "idealistic",
+        "imaginative",
+        "impatient",
+        "impolite",
+        "inconsiderate",
+        "independent",
+        "industrious",
+        "innocent",
+        "interfering",
+        "intelligent",
+        "jealous",
+        "judgmental",
+        "kindly",
+        "lazy",
+        "lively",
+        "loving",
+        "lovable",
+        "loyal",
+        "manipulative",
+        "materialistic",
+        "melancholic",
+        "mysterious",
+        "naïve",
+        "nervous",
+        "opinionated",
+        "optimistic",
+        "overbearing",
+        "patient",
+        "pessimistic",
+        "petulant",
+        "polite",
+        "proud",
+        "prying",
+        "rational",
+        "realistic",
+        "rebellious",
+        "reckless",
+        "reflective",
+        "reliable",
+        "reserved",
+        "responsible",
+        "restless",
+        "rigid",
+        "sarcastic",
+        "secretive",
+        "selfish",
+        "sensible",
+        "sensitive",
+        "sensuous",
+        "serious",
+        "shy",
+        "sly",
+        "solitary",
+        "stable",
+        "stingy",
+        "strict",
+        "stubborn",
+        "submissive",
+        "thoughtful",
+        "thoughtless",
+        "timid",
+        "tolerant",
+        "trail-blazing",
+        "trusting",
+        "trustworthy",
+        "unfriendly",
+        "unkind",
+        "unstable",
+        "untidy",
+        "wary",
+        "woeful",
+      ],
+
+      contactMotivation: [
+        "Person: enemy",
+        "Person: family",
+        "Person: friend",
+        "Person: idol",
+        "Person: lover",
+        "Person: rival",
+        "Object: artifact",
+        "Object: money",
+        "Object: property",
+        "Object: secrets",
+        "Object: technology",
+        "Object: weapons",
+        "Status: acceptance",
+        "Status: achievement",
+        "Status: authority",
+        "Status: fame",
+        "Status: immortality",
+        "Status: safety",
+        "Belief: compassion",
+        "Belief: duty",
+        "Belief: faith",
+        "Belief: justice",
+        "Belief: loyalty",
+        "Belief: tradition",
+        "History: abandoned",
+        "History: betrayed",
+        "History: disappointed",
+        "History: faked",
+        "History: heroic",
+        "History: rejected",
+        "Vice: gambling",
+        "Vice: stupor",
+        "Vice: pleasure",
+        "Vice: pride",
+        "Vice: weird",
+        "Vice: wrath",
+      ],
+    };
+  </script>
+  <style>
+    /*
+     * Reset.css
+     */
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    aside,
+    canvas,
+    details,
+    embed,
+    figure,
+    figcaption,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    output,
+    ruby,
+    section,
+    summary,
+    time,
+    mark,
+    audio,
+    video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    hgroup,
+    menu,
+    nav,
+    section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol,
+    ul {
+      list-style: none;
+    }
+    blockquote,
+    q {
+      quotes: none;
+    }
+    blockquote:before,
+    blockquote:after,
+    q:before,
+    q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /*
+     * Variables
+     */
+
+    body {
+      /*
+       * responsive breakpoints.
+       *
+       * Please note the layout should be tested not only at those width,
+       * but also for intermediary sizes as the app may be included as
+       * a plugin in a block of an other app, and the width will thus
+       * be uncommon.
+       *
+       * Those declarations are for reference only, currently, since we
+       * can't use css variables in media query definitions. Ultimately,
+       * it will be usable with env() when browser will have implemented
+       * them.
+       */
+      --tablet-min: 500px;
+      --laptop-min: 1024px;
+      --desktop-min: 1200px;
+
+      /*
+       * Use a fraction of those for deeper blocks.
+       *
+       * first level block: no divisor
+       * second level block: --root-spacing-* / 2
+       * third level block: --root-spacing-* / 3
+       * etc
+       */
+      --root-spacing-width: 3vw;
+      --root-spacing-height: 8vh;
+
+      /*
+       * Use divisors/mulipliers of those to set text size
+       */
+      --base-font: 1em;
+      --base-line-height: 1.5em;
+
+      /*
+       * a few colors helpers.
+       */
+      --primary-color: #f0b90b;
+      --secondary-color: #00c582;
+
+      --dark: #0b0e11;
+      --lesser-dark: #333;
+      --grey: #151515;
+      --lesser-light: #666;
+      --mid-light: #888;
+      --light: #aaa;
+
+      --red: #ab0d0d;
+      --green: green;
+      --warning-color: #600;
+      --warning-bg-color: #faa;
+    }
+
+    @media(max-width: 499px)) {
+      .hidden-phone { display: none; }
+      .hidden-mobile { display: none; }
+
+      .visible-phone { display: inherit; }
+      .visible-tablet { display: none; }
+      .visible-mobile { display: inherit; }
+      .visible-laptop { display: none; }
+      .visible-desktop { display: none; }
+      .visible-computer { display: none; }
+    }
+
+    @media(min-width: 500px && max-width: 1023px) {
+      .hidden-phone { display: inherit; }
+
+      .hidden-tablet { display: none; }
+      .hidden-mobile { display: none; }
+
+      .visible-phone { display: none; }
+      .visible-tablet { display: inherit; }
+      .visible-mobile { display: inherit; }
+      .visible-laptop { display: none; }
+      .visible-desktop { display: none; }
+      .visible-computer { display: none; }
+    }
+
+    @media(min-width: 1024px && max-width: 1199px) {
+      .hidden-phone { display: inherit; }
+      .hidden-tablet { display: inherit; }
+      .hidden-mobile { display: inherit; }
+
+      .hidden-laptop { display: none; }
+      .hidden-computer { display: none; }
+
+      .visible-phone { display: none; }
+      .visible-tablet { display: none; }
+      .visible-mobile { display: none; }
+      .visible-laptop { display: inherit; }
+      .visible-desktop { display: none; }
+      .visible-computer { display: inherit; }
+    }
+
+    @media(min-width: 1200px) {
+      .hidden-phone { display: inherit; }
+      .hidden-tablet { display: inherit; }
+      .hidden-mobile { display: inherit; }
+      .hidden-laptop { display: inherit; }
+
+      .hidden-desktop { display: none; }
+      .hidden-computer { display: none; }
+
+      .visible-phone { display: none; }
+      .visible-tablet { display: none; }
+      .visible-mobile { display: none; }
+      .visible-laptop { display: none; }
+      .visible-desktop { display: inherit; }
+      .visible-computer { display: inherit; }
+    }
+
+    /*
+     * Shared
+     */
+
+    /*
+     * Add this to your root component, displaying a whole page.
+     *
+     * It will generate a grid you can use for proper layout of your page.
+     * Desktop view has 6 columns, tablets has 3, mobile has 1.
+     *
+     * Despite the fact a page should be unique, we use a class name so
+     * that you can give a unique id to your root element for easy css
+     * selection.
+     */
+    .page {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: var(--root-spacing-height) var(--root-spacing-width);
+      grid-row-gap: var(--root-spacing-height);
+      grid-column-gap: var(--root-spacing-width);
+      min-height: 90vh;
+    }
+
+    /*
+     * A group is a block grouping features in your page.
+     *
+     * It allows to separate main content and secondary content.
+     */
+    .group {
+      border: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: calc(var(--root-spacing-height) / 2) calc(var(--root-spacing-width) / 2);
+      margin-bottom: var(--root-spacing-height);
+      background-color: var(--dark);
+    }
+
+    .stack-top {
+      justify-content: flex-start;
+    }
+
+    /*
+     * A feature is a functional block. Eg if you have a list feature, you may also
+     * have a filter feature and a new entry form feature.
+     */
+    .feature {
+      display: flex;
+      border: 0 none;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: calc(var(--root-spacing-height) / 3)
+        cal(var(--root-spacing-width) / 3);
+      margin-bottom: calc(var(--root-spacing-height) / 2);
+    }
+
+    #app,
+    textarea,
+    input,
+    select {
+      font-family: Open Sans, sans-serif;
+      font-size: var(--base-font);
+      line-height: var(--base-line-height);
+      color: var(--light);
+      background-color: var(--dark);
+    }
+
+    body,
+    * {
+      box-sizing: border-box !important;
+    }
+
+    h1 {
+      font-size: calc(var(--base-font) * 1.2);
+      text-align: center;
+      margin: 2vh 0 5vh;
+    }
+
+    h3 {
+      font-size: 0.8em;
+      text-transform: uppercase;
+      color: var(--secondary-color);
+      margin: 2vh 0;
+    }
+
+    h4 {
+      font-size: 0.8em;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      margin: 2vh 0;
+    }
+
+    p {
+      margin-bottom: 2vh;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    b {
+      font-weight: bold;
+    }
+
+    button.link, button.link:hover {
+      background-color: transparent; border: 0 none; cursor: pointer; padding: 0;
+    }
+
+    a, button.link {
+      color: var(--light);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    a:hover, button.link:hover {
+      color: var(--mid-light);
+    }
+
+    img { max-width: 100%; }
+
+    a:focus, button.link:focus { border: 1px solid var(--light); }
+    button:focus, a.button:focus { opacity: 0.7; }
+
+
+    .input-group {
+      margin-bottom: 3vh;
+    }
+
+    textarea,
+    input.text-field,
+    select.text-field,
+    .checkbox-group {
+      width: 100%;
+      border: 1px solid var(--lesser-dark);
+      border-radius: 2px;
+      font-size: var(--base-font);
+      line-height: var(--base-line-height);
+      margin: 1vh 0;
+      padding: 1vh 1vw;
+    }
+
+    textarea {
+      transition: min-height 1s;
+      min-height: 0;
+      padding: 1vh 1vw;
+    }
+
+    textarea.autogrow:focus {
+      min-height: 50vh;
+    }
+
+    .checkbox-group label {
+      display: inline-block;
+      margin-right: 2vw;
+    }
+
+    select {
+      appearance: none; -webkit-appearance: none;
+      border: 1px solid var(--secondary-color);
+      padding: 1vh 1vw;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.8em;
+      background-color: var(--secondary-color);
+      color: var(--dark);
+    }
+
+    button, .button {
+      border: 1px solid var(--primary-color);
+      background-color: transparent;
+      padding: 1vh 1vw;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.8em;
+    }
+
+    /*
+     * Primary CTAs are actions that pops out, like a "create" or "send" button.
+     */
+    button, .button {
+      background-color: var(--primary-color);
+      color: var(--dark);
+      border-color: var(--primary-color);
+    }
+
+    button:hover, .button:hover {
+      background-color: var(--secondary-color);
+      color: var(--dark);
+      border-color: var(--secondary-color);
+    }
+
+    /*
+     * Secondary CTAs are typically cancel actions, next to a primary button. You can
+     * also use it for actions that you don't want to especially stand out (eg: options).
+     */
+    button.secondary, .button.secondary {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      color: var(--dark);
+    }
+
+    button.secondary:hover, .button.secondary:hover {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: var(--dark);
+    }
+
+    button.danger {
+      background-color: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    button.danger:hover, .button.danger:hover {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: var(--dark);
+    }
+
+    button[disabled] {
+      background-color: var(--lesser-dark !important);
+      color: var(--lesser-light !important);
+    }
+
+    /*
+     * if button contains only an icon, add this class
+     */
+    button.icon, .button.icon {
+      padding: 1vh 0.3vw;
+      border-width: 1px;
+      border-radius: 1000px;
+      background-color: var(--primary-color);
+      color: var(--dark);
+      border-color: var(--primary-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button.icon svg, .button.icon svg {
+      width: 1em;
+      height: 1em;
+    }
+
+    button.icon svg .fill-color, .button.icon svg .fill-color {
+      fill: var(--dark);
+    }
+
+    button.icon svg .stroke-color, .button.icon svg .stroke-color {
+      stroke: var(--dark);
+    }
+
+    button.icon:hover, .button.icon:hover {
+      background-color: var(--secondary-color);
+      color: var(--dark);
+      border-color: var(--secondary-color);
+    }
+
+    button.icon:hover svg .fill-color, .button.icon:hover svg .fill-color {
+      fill: var(--dark);
+    }
+
+    button.icon:hover svg .stroke-color, .button.icon:hover svg .stroke-color {
+      stroke: var(--dark);
+    }
+
+    /*
+     * Danger CTAs are typically delete actions.
+     */
+    button.icon.danger:hover, .button.icon.danger:hover {
+      background-color: var(--red);
+      border-color: var(--red);
+    }
+
+    .text-help {
+      font-size: 0.8em;
+      color: var(--lesser-light);
+    }
+
+    p.warning {
+      color: var(--warning-color);
+      background-color: var(--warning-bg-color);
+      border: 1px solid var(--warning-color);
+      padding: 2vh 1vw;
+    }
+
+    button.link {
+      text-decoration: underline; font-size: 1em;
+    }
+
+    body { background-color: var(--dark); }
+
+    body { --primary-color: #b5318f; }
+    header { margin-bottom: 5vh; }
+    h1 { font-size: 2em; line-height: 1.2em; color: var(--secondary-color); text-align: left; margin-bottom: 2vh; }
+    h2 { font-size: 1.5em; line-height: 1.2em; color: var(--secondary-color); text-align: left; margin-bottom: 1vh; margin-top: 4vh; }
+    a { color: var(--primary-color); }
+    button { font-size: 1.2em; }
+    button[disabled] { filter: saturate(0); cursor: inherit; }
+    button[disabled]:hover { background-color: var(--primary-color); border-color: var(--primary-color); }
+
+    #langs { position: absolute; top: 1vh; right: 1vw; }
+    #langs a { font-size: 1em; margin-left: 1vw; }
+
+    #mission form { display: flex; flex-direction: column; }
+    #mission form button { margin: 2vh 0 5vh; }
+    #mission .generated { display: none; }
+    #mission .badge strong { font-weight: bold; color: var(--primary-color); }
+    #mission p.badge.complication { font-weight: bold; background-color: #e5318f; color: #000; }
+    #mission .badge {
+      display: inline-block; padding: 1vh 1vw; margin-right: 10px; margin-bottom: 2vh;
+      background-color: #333; border-radius: 100px; padding: 1vh 3vw;
+    }
+
+
+    #npcs .label { font-weight: bold; }
+
+    @media(min-width: 1024px) {
+      button { font-size: 1em; }
+      #mission form { display: flex; flex-direction: row; }
+      #mission form button { margin: 0; }
+      #mission .badge { padding: 1vh 1vw; }
+      #mission .scenes img { max-width: 500px; }
+    }
+  </style>
+  <script>
+    let currentLanguage = "en";
+
+    function pick(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function hideComplication() {
+      let $complication = document.querySelector("p.complication");
+      $complication.classList.remove("badge");
+      $complication.textContent = "";
+    }
+
+    function translate(key) {
+      let path = key.split(".");
+
+      try {
+        let tr = window.translations[currentLanguage];
+        path.forEach(p => tr = tr[p]);
+        return tr;
+      } catch(e) {
+        return "missing translation";
+      }
+    }
+
+    let t = translate;
+
+    function translateAll() {
+      Array.from(document.querySelectorAll("[data-tr]")).forEach($el => {
+        $el.innerHTML = translate($el.dataset.tr);
+        $el.removeAttribute("data-tr");
+      });
+    }
+
+    window.runBasicsObjectives = translate("runBasicsObjectives");
+    window.runBasicsTargets = translate("runBasicsTargets");
+    window.runDetailsInterestedParties = translate("runDetailsInterestedParties");
+    window.runDetailsComplications = translate("runDetailsComplications");
+    window.runLocationMeets = translate("runLocationMeets");
+    window.runLocationTargets = translate("runLocationTargets");
+    window.storyBeatObjects = translate("storyBeatObjects");
+    window.nodeMapsModifiers = translate("nodeMapsModifiers");
+    window.contactMetatype = translate("contactMetatype");
+    window.contactRareMetatype = translate("contactRareMetatype");
+    window.contactTraits = translate("contactTraits");
+    window.contactMotivation = translate("contactMotivation");
+
+    let initializers = [
+      function missionSection() {
+        let $container = document.getElementById("mission");
+        let $form = $container.querySelector("form");
+        let $playersCount = $form.querySelector("input.players");
+        let $scenesCount = $form.querySelector("input.scenes");
+        let $partiesCount = $form.querySelector("input.interested-parties");
+        let $generated = $container.querySelector(".generated");
+        let $tags = $generated.querySelector(".tags");
+        let $threats = $generated.querySelector(".threats");
+        let $scenes = $generated.querySelector(".scenes");
+
+        let generateTags = (scenesCount, partiesCount) => {
+          let tags = [];
+          tags.push(pick(window.runBasicsObjectives));
+          tags.push(pick(window.runBasicsTargets));
+
+          for (let i = 0; i < partiesCount; i++)
+            tags.push(pick(window.runDetailsInterestedParties));
+
+          tags.push(pick(window.runLocationMeets));
+
+          for (let i = 0; i < scenesCount; i++)
+            tags.push(pick(window.runLocationTargets));
+
+          tags.forEach(tag => {
+            let $tag = document.createElement("span");
+            $tag.innerHTML = tag;
+            $tag.classList.add("badge");
+            $tags.appendChild($tag);
+          });
+        }
+
+        let generateThreats = (scenesCount, partiesCount) => {
+          let threats = [];
+          let threatsCount = (parseInt($playersCount.value) || 1) + (parseInt($scenesCount.value) || 3);
+          for (let i = 0; i < threatsCount; i++)
+            threats.push(pick(window.storyBeatObjects));
+
+          threats.forEach(threat => {
+            let $threat = document.createElement("span");
+            $threat.textContent = threat;
+            $threat.classList.add("badge");
+            $threats.appendChild($threat);
+          });
+        }
+
+        let generateScenes = scenesCount => {
+          for (let i = 0; i < scenesCount; i++) {
+            let template = document.getElementById("scene-template");
+            let $scene = template.content.cloneNode(true);
+            $scene.querySelector(".number").textContent = i+1;
+            let maps = [ "brick-wall.png", "downward-spiral.png", "pear-shaped.png", "railroad.png", "red-herring.png", "uphill-slog.png" ];
+            $scene.querySelector("img").src = `./img/${pick(maps)}`;
+            $scene.querySelector(".modifier").textContent = pick(window.nodeMapsModifiers);
+            $scenes.appendChild($scene);
+          }
+        };
+
+        let generate = () => {
+          let scenesCount = parseInt($scenesCount.value) || 3;
+          let partiesCount = parseInt($partiesCount.value) || 2;
+          document.getElementById("export").removeAttribute("disabled");
+
+          [$tags, $threats, $scenes].forEach($el => $el.innerHTML = "");
+          hideComplication();
+
+          generateTags(scenesCount, partiesCount);
+          generateThreats(scenesCount, partiesCount);
+          generateScenes(scenesCount);
+
+          $generated.style.display = "inherit";
+          translateAll();
+        };
+
+        $form.addEventListener("submit", event => {
+          event.preventDefault();
+          generate();
+        });
+      },
+
+      function complication() {
+        let $revealComplication = document.querySelector("button.complication");
+        let $complication = document.querySelector("p.complication");
+
+        $revealComplication.addEventListener("click", () => {
+          $complication.classList.add("badge");
+          $complication.style.transition = "";
+          $complication.style.opacity = 0;
+          $complication.textContent = `!!! ${pick(window.runDetailsComplications)} !!!`;
+          window.setTimeout(() => {
+            $complication.style.transition = "opacity 500ms";
+            $complication.style.opacity = 1
+          }, 250);
+        });
+      },
+
+      function npcsSection() {
+        let $container = document.getElementById("npcs");
+        let $list = $container.querySelector("ul");
+        let $add = $container.querySelector("button");
+        let $template = $container.querySelector("template");
+        let npcCount = 0;
+
+        let generate = () => {
+          let $npc = $template.content.cloneNode(true);
+          npcCount++;
+          document.getElementById("export").removeAttribute("disabled");
+
+          let metatype = pick([...window.contactMetatype, "rare"]);
+          if (metatype == "rare") metatype = pick(window.contactRareMetatype);
+          $npc.querySelector(".index").textContent = npcCount;
+          $npc.querySelector(".metatype").textContent = metatype;
+          $npc.querySelector(".traits").textContent = `${pick(window.contactTraits)}, ${pick(window.contactTraits)}`;
+          $npc.querySelector(".motivation").textContent = pick(contactMotivation);
+
+          $list.appendChild($npc);
+          translateAll();
+        };
+
+        $add.addEventListener("click", () => generate());
+      },
+
+      function translations() {
+        translateAll();
+      },
+
+      function exportMission() {
+        document.getElementById("export").addEventListener("click", () => {
+          let exported = new Blob([exportContent()]);
+
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(exported, {type: "text/plain"});
+          link.download = "sra-mission.txt";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      }
+    ];
+
+    function exportScene($scene) {
+      return `
+    ${$scene.querySelector("h4").textContent}
+    ${t("mission.map")} : ${$scene.querySelector("img").src}
+    ${t("mission.modifier")} : ${$scene.querySelector(".modifier").textContent}
+    `;
+    }
+
+    function exportContent() {
+      return `
+    ${t("mission.title").toUpperCase()}
+
+    ${t("mission.runTags")} : ${Array.from(document.querySelectorAll("#mission .tags .badge")).map(el => el.textContent).join(", ")}
+
+    ${t("mission.runThreats")} : ${Array.from(document.querySelectorAll("#mission .threats .badge")).map(el => el.textContent).join(", ")}
+
+    ${t("mission.runComplications")} : ${document.querySelector("#mission p.complication").textContent}
+
+    ${t("mission.scenes").toUpperCase()}
+    ${Array.from(document.querySelectorAll("#mission li.scene")).map(el => exportScene(el)).join("")}
+
+    ${t("npcs.title").toUpperCase()}
+    ${Array.from(document.querySelectorAll("#npcs li.npc")).map(el => el.textContent.split("\n").map(c => c.replace(/^\s+/, '')).join("\n")).join("")}
+
+    `;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initializers.forEach(init => init());
+    });
+  </script>
+</head>
+<body>
+
+<div id="root">
+  <div id="app" class="page">
+    <nav id="langs">
+      <a href="https://github.com/oelmekki/sra-mission">source code</a>
+      <a href="?lang=en">English</a>
+      <a href="?lang=fr">Français</a>
+    </nav>
+
+    <header>
+      <h1 data-tr="mainTitle"></h1>
+      <p data-tr="controlledAnarchy"></p>
+      <p><button id="export" data-tr="export" disabled="disabled"></button></p>
+    </header>
+
+    <section id="mission">
+      <h2 data-tr="mission.title"></h2>
+
+      <form>
+        <label><span data-tr="mission.playersCount"></span> <input type="number" class="players text-field" min="1" max="10" value="4"></label>
+        <label><span data-tr="mission.scenesCount"></span> <input type="number" class="scenes text-field" min="1" max="10" value="3"></label>
+        <label><span data-tr="mission.interestedPartiesCount"></span> <input type="number" class="interested-parties text-field" min="2" max="10" value="2"></label>
+        <button><span data-tr="mission.generateMission"></span></button>
+      </form>
+
+      <div class="generated">
+        <h3 data-tr="mission.runTags"></h3>
+        <p class="tags"></p>
+
+        <h3 data-tr="mission.runThreats"></h3>
+        <p class=threats></p>
+
+        <h3 data-tr="mission.runComplications"></h3>
+        <p><button class="complication" data-tr="mission.revealComplication"></button></p>
+        <p class="complication"></p>
+
+        <h3 data-tr="mission.scenes"></h3>
+        <ul class="scenes">
+        </ul>
+
+        <template id="scene-template">
+          <li class="scene">
+            <h4><span data-tr="mission.scene"></span> <span class="number"></span></h4>
+            <img src="" />
+            <p><span data-tr="mission.modifier"></span>: <span class="modifier"></span>.</p>
+          </li>
+        </template>
+      </div>
+    </section>
+
+    <section id="npcs">
+      <h2 data-tr="npcs.title"></h2>
+      <ul></ul>
+      <button data-tr="npcs.add"></button>
+
+      <template id="npc-template">
+        <li class="npc">
+          <h3><span data-tr="npcs.npc"></span> <span class="index"></span></h3>
+          <p><span class="label" data-tr="npcs.metatype"></span>: <span class="metatype"></span></p>
+          <p><span class="label" data-tr="npcs.traits"></span>: <span class="traits"></span></p>
+          <p><span class="label" data-tr="npcs.motivation"></span>: <span class="motivation"></span></p>
+        </li>
+      </template>
+    </section>
+  </div>
+</div>
+</body>
+</html>
