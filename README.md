@@ -36,12 +36,31 @@ The app can be run through [github pages here](https://oelmekki.github.io/sra-mi
 Or the french version : [github pages here](https://oelmekki.github.io/sra-mission/?lang=fr). 
 
 
-## What about my language?
+## A word about maintenance
 
-English and French are the only two languages I speak, but if you're in
-another big community of Shadowrun (looking at you, Germany ;) ) and want
-to translate it, you can fork this repos, copy `js/translations/en.js`,
-translate the text in quotes and send me a pull request.
+This repos is not maintained anymore. Does it means it will ultimately
+break on you? Nope, because stopping maintaining it after a few weeks was
+the plan from the beginning! Sra-mission is build using only standards
+(html/js/css) with no dependency. That means that as long as web browsers
+exist, it will work unaltered. If you want to run it on your local machine,
+get a copy of this repository and open the file `index.standalone.en.html`
+(English) or `index.standalone.fr.html` (French) in your browser (on most
+systems, clicking the file to open it will do it). That way, you can even
+easily add more words in the pool of words selected if you want to (the
+translations are at the start of those files, open them in a text editor).
+If you're not used to that, try it, tinkering is fun, nothing as satisfying
+as changing something to make it more useful to you. You could even use
+this app as a basis to make your own scene generator for a completely
+different TTRPG.
+
+Sra-mission is currently hosted on Github pages. That means it will be
+publicly available until… Github decides to shut down the service or change
+it in a way that breaks the app. May be tomorrow, may be never. Until then,
+if you want to change something in sra-mission and make it available, it's
+as simple (if you're used to Github) as forking this repository, making
+your change and activating Github pages in your new repository's settings.
+The standalone files are not used by Github pages, edit the other files if
+you want to change something (all wording is in `js/translations/`).
 
 
 ## Credits
