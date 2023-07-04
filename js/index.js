@@ -1,17 +1,11 @@
-let currentLanguage = (new URLSearchParams(window.location.search)).get("lang") || "en";
+const currentLanguage = (new URLSearchParams(window.location.search)).get("lang") || "en";
 
 function pick(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function hideComplication() {
-  let $complication = document.querySelector("p.complication");
-  $complication.classList.remove("badge");
-  $complication.textContent = "";
-}
-
 function translate(key) {
-  let path = key.split(".");
+  const path = key.split(".");
 
   try {
     let tr = window.translations[currentLanguage];
@@ -22,7 +16,7 @@ function translate(key) {
   }
 }
 
-let t = translate;
+const t = translate;
 
 function translateAll() {
   Array.from(document.querySelectorAll("[data-tr]")).forEach($el => {
@@ -44,146 +38,146 @@ window.contactRareMetatype = translate("contactRareMetatype");
 window.contactTraits = translate("contactTraits");
 window.contactMotivation = translate("contactMotivation");
 
-let initializers = [
-  function missionSection() {
-    let $container = document.getElementById("mission");
-    let $form = $container.querySelector("form");
-    let $playersCount = $form.querySelector("input.players");
-    let $scenesCount = $form.querySelector("input.scenes");
-    let $partiesCount = $form.querySelector("input.interested-parties");
-    let $generated = $container.querySelector(".generated");
-    let $tags = $generated.querySelector(".tags");
-    let $threats = $generated.querySelector(".threats");
-    let $scenes = $generated.querySelector(".scenes");
+function hideComplication() {
+  const $complication = document.querySelector("p.complication");
+  $complication.classList.remove("badge");
+  $complication.textContent = "";
+}
 
-    let generateTags = (scenesCount, partiesCount) => {
-      let tags = [];
-      tags.push(pick(window.runBasicsObjectives));
-      tags.push(pick(window.runBasicsTargets));
+function missionSection() {
+  const $container = document.getElementById("mission");
+  const $form = $container.querySelector("form");
+  const $playersCount = $form.querySelector("input.players");
+  const $scenesCount = $form.querySelector("input.scenes");
+  const $partiesCount = $form.querySelector("input.interested-parties");
+  const $generated = $container.querySelector(".generated");
+  const $tags = $generated.querySelector(".tags");
+  const $threats = $generated.querySelector(".threats");
+  const $scenes = $generated.querySelector(".scenes");
 
-      for (let i = 0; i < partiesCount; i++)
-        tags.push(pick(window.runDetailsInterestedParties));
+  const generateTags = (scenesCount, partiesCount) => {
+    let tags = [];
+    tags.push(pick(window.runBasicsObjectives));
+    tags.push(pick(window.runBasicsTargets));
 
-      tags.push(pick(window.runLocationMeets));
+    for (let i = 0; i < partiesCount; i++)
+      tags.push(pick(window.runDetailsInterestedParties));
 
-      for (let i = 0; i < scenesCount; i++)
-        tags.push(pick(window.runLocationTargets));
+    tags.push(pick(window.runLocationMeets));
 
-      tags.forEach(tag => {
-        let $tag = document.createElement("span");
-        $tag.innerHTML = tag;
-        $tag.classList.add("badge");
-        $tags.appendChild($tag);
-      });
-    }
+    for (let i = 0; i < scenesCount; i++)
+      tags.push(pick(window.runLocationTargets));
 
-    let generateThreats = (scenesCount, partiesCount) => {
-      let threats = [];
-      let threatsCount = (parseInt($playersCount.value) || 1) + (parseInt($scenesCount.value) || 3);
-      for (let i = 0; i < threatsCount; i++)
-        threats.push(pick(window.storyBeatObjects));
-
-      threats.forEach(threat => {
-        let $threat = document.createElement("span");
-        $threat.textContent = threat;
-        $threat.classList.add("badge");
-        $threats.appendChild($threat);
-      });
-    }
-
-    let generateScenes = scenesCount => {
-      for (let i = 0; i < scenesCount; i++) {
-        let template = document.getElementById("scene-template");
-        let $scene = template.content.cloneNode(true);
-        $scene.querySelector(".number").textContent = i+1;
-        let maps = [ "brick-wall.png", "downward-spiral.png", "pear-shaped.png", "railroad.png", "red-herring.png", "uphill-slog.png" ];
-        $scene.querySelector("img").src = `./img/${pick(maps)}`;
-        $scene.querySelector(".modifier").textContent = pick(window.nodeMapsModifiers);
-        $scenes.appendChild($scene);
-      }
-    };
-
-    let generate = () => {
-      let scenesCount = parseInt($scenesCount.value) || 3;
-      let partiesCount = parseInt($partiesCount.value) || 2;
-      document.getElementById("export").removeAttribute("disabled");
-
-      [$tags, $threats, $scenes].forEach($el => $el.innerHTML = "");
-      hideComplication();
-
-      generateTags(scenesCount, partiesCount);
-      generateThreats(scenesCount, partiesCount);
-      generateScenes(scenesCount);
-
-      $generated.style.display = "inherit";
-      translateAll();
-    };
-
-    $form.addEventListener("submit", event => {
-      event.preventDefault();
-      generate();
-    });
-  },
-
-  function complication() {
-    let $revealComplication = document.querySelector("button.complication");
-    let $complication = document.querySelector("p.complication");
-
-    $revealComplication.addEventListener("click", () => {
-      $complication.classList.add("badge");
-      $complication.style.transition = "";
-      $complication.style.opacity = 0;
-      $complication.textContent = `!!! ${pick(window.runDetailsComplications)} !!!`;
-      window.setTimeout(() => {
-        $complication.style.transition = "opacity 500ms";
-        $complication.style.opacity = 1
-      }, 250);
-    });
-  },
-
-  function npcsSection() {
-    let $container = document.getElementById("npcs");
-    let $list = $container.querySelector("ul");
-    let $add = $container.querySelector("button");
-    let $template = $container.querySelector("template");
-    let npcCount = 0;
-
-    let generate = () => {
-      let $npc = $template.content.cloneNode(true);
-      npcCount++;
-      document.getElementById("export").removeAttribute("disabled");
-
-      let metatype = pick([...window.contactMetatype, "rare"]);
-      if (metatype == "rare") metatype = pick(window.contactRareMetatype);
-      $npc.querySelector(".index").textContent = npcCount;
-      $npc.querySelector(".metatype").textContent = metatype;
-      $npc.querySelector(".traits").textContent = `${pick(window.contactTraits)}, ${pick(window.contactTraits)}`;
-      $npc.querySelector(".motivation").textContent = pick(contactMotivation);
-
-      $list.appendChild($npc);
-      translateAll();
-    };
-
-    $add.addEventListener("click", () => generate());
-  },
-
-  function translations() {
-    translateAll();
-  },
-
-  function exportMission() {
-    document.getElementById("export").addEventListener("click", () => {
-      let exported = new Blob([exportContent()]);
-
-      let link = document.createElement("a");
-      link.href = window.URL.createObjectURL(exported, {type: "text/plain"});
-      link.download = "sra-mission.txt";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    tags.forEach(tag => {
+      const $tag = document.createElement("span");
+      $tag.innerHTML = tag;
+      $tag.classList.add("badge");
+      $tags.appendChild($tag);
     });
   }
-];
+
+  const generateThreats = (scenesCount, partiesCount) => {
+    let threats = [];
+    const threatsCount = (parseInt($playersCount.value) || 1) + (parseInt($scenesCount.value) || 3);
+    for (let i = 0; i < threatsCount; i++)
+      threats.push(pick(window.storyBeatObjects));
+
+    threats.forEach(threat => {
+      let $threat = document.createElement("span");
+      $threat.textContent = threat;
+      $threat.classList.add("badge");
+      $threats.appendChild($threat);
+    });
+  }
+
+  const generateScenes = scenesCount => {
+    for (let i = 0; i < scenesCount; i++) {
+      let template = document.getElementById("scene-template");
+      let $scene = template.content.cloneNode(true);
+      $scene.querySelector(".number").textContent = i+1;
+      let maps = [ "brick-wall.png", "downward-spiral.png", "pear-shaped.png", "railroad.png", "red-herring.png", "uphill-slog.png" ];
+      $scene.querySelector("img").src = `./img/${pick(maps)}`;
+      $scene.querySelector(".modifier").textContent = pick(window.nodeMapsModifiers);
+      $scenes.appendChild($scene);
+    }
+  };
+
+  const generate = () => {
+    const scenesCount = parseInt($scenesCount.value) || 3;
+    const partiesCount = parseInt($partiesCount.value) || 2;
+    document.getElementById("export").removeAttribute("disabled");
+
+    [$tags, $threats, $scenes].forEach($el => $el.innerHTML = "");
+    hideComplication();
+
+    generateTags(scenesCount, partiesCount);
+    generateThreats(scenesCount, partiesCount);
+    generateScenes(scenesCount);
+
+    $generated.style.display = "inherit";
+    translateAll();
+  };
+
+  $form.addEventListener("submit", event => {
+    event.preventDefault();
+    generate();
+  });
+}
+
+function complicationSection() {
+  const $revealComplication = document.querySelector("button.complication");
+  const $complication = document.querySelector("p.complication");
+
+  $revealComplication.addEventListener("click", () => {
+    $complication.classList.add("badge");
+    $complication.style.transition = "";
+    $complication.style.opacity = 0;
+    $complication.textContent = `!!! ${pick(window.runDetailsComplications)} !!!`;
+    window.setTimeout(() => {
+      $complication.style.transition = "opacity 500ms";
+      $complication.style.opacity = 1
+    }, 250);
+  });
+}
+
+function npcsSection() {
+  const $container = document.getElementById("npcs");
+  const $list = $container.querySelector("ul");
+  const $add = $container.querySelector("button");
+  const $template = $container.querySelector("template");
+  let npcCount = 0;
+
+  const generate = () => {
+    const $npc = $template.content.cloneNode(true);
+    npcCount++;
+    document.getElementById("export").removeAttribute("disabled");
+
+    const metatype = pick([...window.contactMetatype, "rare"]);
+    if (metatype == "rare") metatype = pick(window.contactRareMetatype);
+    $npc.querySelector(".index").textContent = npcCount;
+    $npc.querySelector(".metatype").textContent = metatype;
+    $npc.querySelector(".traits").textContent = `${pick(window.contactTraits)}, ${pick(window.contactTraits)}`;
+    $npc.querySelector(".motivation").textContent = pick(contactMotivation);
+
+    $list.appendChild($npc);
+    translateAll();
+  };
+
+  $add.addEventListener("click", () => generate());
+}
+
+function exportMissionSection() {
+  document.getElementById("export").addEventListener("click", () => {
+    const exported = new Blob([exportContent()]);
+
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(exported, {type: "text/plain"});
+    link.download = "sra-mission.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+}
 
 function exportScene($scene) {
   return `
@@ -213,5 +207,9 @@ ${Array.from(document.querySelectorAll("#npcs li.npc")).map(el => el.textContent
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  initializers.forEach(init => init());
+  missionSection();
+  complicationSection();
+  npcsSection();
+  exportMissionSection();
+  translateAll();
 });
