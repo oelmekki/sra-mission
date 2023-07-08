@@ -15,6 +15,9 @@
 Shadowrun Anarchy Generator allows to automatize generating contract briefs
 for use in Shadowrun Anarchy, through Controlled Anarchy.
 
+> A note for Github users: development is happening [on
+> Gitlab](https://gitlab.com/oelmekki/sra-mission), please go there for
+> issues and pull requests.
 
 ## What
 
@@ -41,11 +44,9 @@ Or the French version : [Gitlab pages here](https://oelmekki.gitlab.io/sra-missi
 Alternatively, on Github: [English](https://oelmekki.github.io/sra-mission/) and [French](https://oelmekki.github.io/sra-mission/?lang=fr)
 
 
-## A word about maintenance
+## Made to last
 
-This repos is not maintained anymore. Does it means it will ultimately
-break on you? Nope, because stopping maintaining it after a few weeks was
-the plan from the beginning! Sra-mission is build using only standards
+Sra-mission is build using only standards
 (html/js/css) with no dependency. That means that as long as web browsers
 exist, it will work unaltered. If you want to run it on your local machine,
 get a copy of this repository and open the file `index.standalone.en.html`
